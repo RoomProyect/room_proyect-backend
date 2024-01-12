@@ -1,71 +1,57 @@
-const mongoose = require( 'mongoose' );
 
-const apartmentSchema = mongoose.Schema({
-    title: {
-        type: String
-    },
-    city:{
-        type: String
-    },
-    country: {
-        type: String
-    },
-    description: {
-        type: String
-    },
-    qualification: {
+const mongoose = require( 'mongoose' );
+const Schema = mongoose.Schema;
+
+const viviendaSchema = new Schema({
+    mcCasa: {
         type: Number,
-        validate: {
-            validator: function(value) {
-              return value >= 0.00 && value <= 5.00;
-            },
-            message: 'La calificación debe estar entre 0.00 y 5.00'
-        }
+        required: true,
     },
-    rooms:{
-        type: Number
+    mcTerreno: {
+        type: Number,
+        required: true,
     },
-    beds:{
-        type: Number
+    ambientes: {
+        type: Number,
     },
-    bathrooms: {
-        type: Number
+    banos: {
+        type: Number,
+        required: true,
     },
-    guests: {
-        type: Number
+    cochera: {
+        type: Number,
     },
-    //boolean data
-    wifi:{
-        type: Boolean
+    dormitorio: {
+        type: Number,
+        required: true,
     },
-    parking: {
-        type: Boolean
+    descripcion: {
+        type: String,
     },
-    washing_machine:{
-        type: Boolean
+    direccion: {
+        type: String,
+        required: true,
     },
-    carbon_monoxide_detector:{
-        type: Boolean
+    precio: {
+        type: Number,
+        required: true,
     },
-    kitchen: {
-        type: Boolean
-    },
-    work_zone: {
-        type: Boolean
-    },
-    television: {
+    piscina: {
         type: Boolean,
     },
-    air_conditioning: {
-        type: Boolean
+    quincho: {
+        type: Boolean,
     },
-    smoke_detector:{
-        type: Boolean
+    imagen: {
+        type: String,
+    },
+    ciudad: {
+        type: String
     },
     user: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true
     }
-});
+})
 
-module.exports = mongoose.model( 'Apartment', apartmentSchema );
+module.exports = mongoose.model( 'apartments',viviendaSchema);
