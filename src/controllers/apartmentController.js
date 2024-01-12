@@ -13,6 +13,12 @@ const getApartmentsController = async () => {
   return [...dbApartments];
 };
 
+const getApartmentByIdController = async (id) => {
+  const apartment = await apartmentSchema.findById(id);
+
+  return apartment;
+};
+
 const getApartamentByLocation = async (country, city) => {
   const allApartaments = await getApartamentController();
   const apartamentsByCountry = allApartaments.filter((apartament) =>
@@ -33,4 +39,5 @@ module.exports = {
   getApartmentsController,
   postApartmentController,
   getApartamentByLocation,
+  getApartmentByIdController,
 };
