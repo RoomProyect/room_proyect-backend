@@ -54,4 +54,4 @@ const viviendaSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model( 'apartments',viviendaSchema);
+module.exports = mongoose.model( 'vivienda',viviendaSchema);
