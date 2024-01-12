@@ -1,22 +1,23 @@
-const { postApartmentController, getApartamentController, getApartamentByLocation } = require("../controllers/apartmentController");
+const { postApartmentController,getApartmentsControler, getApartamentController, getApartamentByLocation } = require("../controllers/apartmentController");
 
-// const getUsersHandler = async( req,res ) => {
-//     try {
-//         const response = await getUsersController();
-//         res.status( 200 ).json( response );
-//     } catch (error) {
-//         res.status( 400 ).json( { error: error.message } );
-//     }
-// }
 
-const postApartmentHandler = async ( req,res ) => {
-    try {
-        const response = await postApartmentController( req.body );
-        res.status( 201 ).json( response ); 
-    } catch (error) {
-        res.status( 400 ).json( { error: error.message } )
-    }
-}
+const getApartmentsHandler = async (req, res) => {
+  try {
+    const response = await getApartmentsControler();
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const postApartmentHandler = async (req, res) => {
+  try {
+    const response = await postApartmentController(req.body);
+    res.status(201).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 const getApartmentHandler = async ( req,res ) => {
     const { country } = req.query
@@ -34,6 +35,9 @@ const getApartmentHandler = async ( req,res ) => {
 }
 
 module.exports = {
-    getApartmentHandler,
+
+  getApartmentsHandler,
+  getApartmentHandler,
     postApartmentHandler
-}
+};
+
