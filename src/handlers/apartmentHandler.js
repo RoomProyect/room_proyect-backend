@@ -19,10 +19,10 @@ const postApartmentHandler = async ( req,res ) => {
 }
 
 const getApartmentHandler = async ( req,res ) => {
-    const { country } = req.query
+    const { city } = req.query
     try {
-        if(country) {
-            const response = await getApartamentByLocation(country)
+        if(city) {
+            const response = await getApartamentByLocation(city)
             res.status(201).json(response)
         } else {
             const response = await getApartamentController();
