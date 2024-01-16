@@ -7,10 +7,20 @@ const postApartmentController = async (data) => {
   return response;
 };
 
-const getApartmentsController = async () => {
-  const dbApartments = await apartmentSchema.find();
+const getApartmentsController = async ( page = 1,limit = 5 ) => {
+  try {
+    const options = {
+      page,
+      limit
+    }
+    
+    const dbApartments = await apartmentSchema.paginate( {},options );
 
-  return [...dbApartments];
+    return dbApartments;
+
+  } catch (error) {
+    throw( error );
+  }
 };
 
 const getApartmentByIdController = async (id) => {

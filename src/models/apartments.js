@@ -1,4 +1,5 @@
 const mongoose = require( 'mongoose' );
+const mongoosePaginate = require( 'mongoose-paginate-v2' );
 
 const apartmentSchema = mongoose.Schema({
 
@@ -36,5 +37,7 @@ const apartmentSchema = mongoose.Schema({
         type: String
     }
 });
+
+viviendaSchema.plugin( mongoosePaginate );
 
 module.exports = mongoose.model( 'vivienda', apartmentSchema);
