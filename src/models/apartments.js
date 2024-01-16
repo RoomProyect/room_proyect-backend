@@ -38,6 +38,6 @@ const apartmentSchema = mongoose.Schema({
     }
 });
 
-viviendaSchema.plugin( mongoosePaginate );
+apartmentSchema.plugin( mongoosePaginate );
 
 module.exports = mongoose.model( 'vivienda', apartmentSchema);
