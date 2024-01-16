@@ -1,5 +1,6 @@
 
 const mongoose = require( 'mongoose' );
+const mongoosePaginate = require( 'mongoose-paginate-v2' );
 const Schema = mongoose.Schema;
 
 const viviendaSchema = new Schema({
@@ -52,6 +53,8 @@ const viviendaSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
         required: true
     }
-})
+});
+
+viviendaSchema.plugin( mongoosePaginate );
 
 module.exports = mongoose.model( 'vivienda',viviendaSchema);
