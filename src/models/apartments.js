@@ -1,57 +1,43 @@
-
 const mongoose = require( 'mongoose' );
-const Schema = mongoose.Schema;
+const mongoosePaginate = require( 'mongoose-paginate-v2' );
 
-const viviendaSchema = new Schema({
-    mcCasa: {
-        type: Number,
-        required: true,
-    },
-    mcTerreno: {
-        type: Number,
-        required: true,
-    },
+const apartmentSchema = mongoose.Schema({
+
     ambientes: {
-        type: Number,
+        type: String
     },
-    banos: {
-        type: Number,
-        required: true,
-    },
-    cochera: {
-        type: Number,
-    },
-    dormitorio: {
-        type: Number,
-        required: true,
-    },
-    descripcion: {
-        type: String,
-    },
-    direccion: {
-        type: String,
-        required: true,
-    },
-    precio: {
-        type: Number,
-        required: true,
-    },
-    piscina: {
-        type: Boolean,
-    },
-    quincho: {
-        type: Boolean,
-    },
-    imagen: {
-        type: String,
+    baños:{
+        type: String
     },
     ciudad: {
         type: String
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User',
-        required: true
+    cochera: {
+        type: String
+    },
+    descripcion: {
+        type: String
+    },
+    img: {
+        type: String
+    },
+    mcTerreno: {
+        type: String
+    },
+    precio: {
+        type: String
+    },    
+    titulo: {
+        type: String
+    },
+    tipoDeVivienda: {
+        type: String
+    },
+    habitaciones: {
+        type: String
     }
-})
+});
 
-module.exports = mongoose.model( 'vivienda',viviendaSchema);
+apartmentSchema.plugin( mongoosePaginate );
+
+module.exports = mongoose.model( 'vivienda', apartmentSchema);

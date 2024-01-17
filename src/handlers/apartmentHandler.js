@@ -7,8 +7,11 @@ const {
 
 const getApartmentsHandler = async (req, res) => {
   try {
-    const response = await getApartmentsController();
-    res.status(200).json(response);
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 5;
+
+    const response = await getApartmentsController( page,limit );
+    res.status(200).json( response );
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
