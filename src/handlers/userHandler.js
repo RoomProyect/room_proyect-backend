@@ -17,7 +17,7 @@ const postUserHandler = async ( req,res ) => {
         if(response.error){
             throw new Error(response.error)
         }
-        // await verification_email_message(req.body.email, req.body.name)
+        await verification_email_message(req.body.email, req.body.name)
 
         res.status( 201 ).json( response );
     } catch (error) {
@@ -27,8 +27,8 @@ const postUserHandler = async ( req,res ) => {
 
 const loginUserHandler = async ( req,res ) =>{
     try {
-        const { email, password } = req.body;
-        const response = await loginUserController(email, password);
+        const { email } = req.body;
+        const response = await loginUserController(email);
 
         if(response.error){
             throw new Error(response.error)
@@ -36,7 +36,7 @@ const loginUserHandler = async ( req,res ) =>{
 
         res.status( 201 ).json(response)
     } catch (error) {
-        res.status( 400 ).json( {error: error.message, login: false} )
+        res.status( 400 ).json( {error: error.message } )
     }
 }
 

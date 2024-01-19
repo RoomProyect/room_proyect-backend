@@ -1,6 +1,5 @@
-const { userExists, hashPassword } = require('../functions/user-functions');
+const { userExists } = require('../functions/user-functions');
 const userSchema = require( '../models/user' );
-const bcrypt = require('bcrypt')
 
 const postUserController = async( data ) => {
     const isUserExist = await userExists(data.email);
@@ -8,10 +7,6 @@ const postUserController = async( data ) => {
     if (isUserExist) {
         return { error: 'El usuario ya existe' }
     }
-
-    const hashedPassword = await hashPassword(data.password);
-    
-    data.password = hashedPassword;
 
     const user = userSchema( data );
     const response = await user.save();
@@ -32,13 +27,7 @@ const loginUserController = async (email, password) =>{
     }
     const user = await userSchema.findOne( {email: email} ).exec();
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-        return { error: 'Contraseña incorrecta'}
-    }
-
-    return { message: 'inicio de sesion exitoso', login: true }
+    return { message: 'inicio de sesion exitoso'}
 }
 
 module.exports = {
