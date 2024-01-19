@@ -9,32 +9,32 @@ const Stripe = require("stripe")
 const stripe = Stripe(process.env.STRIPE_KEY)
 
 stripeRouter.post("/", async (req, res) => {
-    // const detailID = req.body.items._id
 
-    console.log(req.body)
+    const {titulo, descripcion, _id, precio, img} = req.body
 
-    const line_items = req.body.response.map((item) => {
-        return {
+    const line_items = [ {
+        
             price_data: {
                 currency: 'usd',
                 product_data: {
-                name: item.titulo,
-                description: item.descripcion,
+                name: titulo,
+                images: [img],
+                description: descripcion,
                 metadata:{
-                    id: item._id
+                    id: _id
                 }
                 },
-                unit_amount: item.precio * 100,
+                unit_amount: precio * 100,
                 },
                 quantity: 1,
-        }
-    })
+        
+    }]
 
     const session = await stripe.checkout.sessions.create({
         line_items,
         mode: 'payment',
         success_url: 'http://localhost:5173/checkout-success',
-        cancel_url: `http://localhost:5173`,
+        cancel_url: `http://localhost:5173/detail/${_id}`,
     });
     
     res.send({url: session.url});
