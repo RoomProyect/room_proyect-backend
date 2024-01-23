@@ -1,17 +1,24 @@
 const {
   postApartmentController,
   getApartmentsController,
-  getApartamentByLocation,
+  getApartmentByLocation,
   getApartmentByIdController,
 } = require("../controllers/apartmentController");
 
 const getApartmentsHandler = async (req, res) => {
+  const { city } = req.query
   try {
-    const page = req.query.page || 1;
-    const limit = req.query.limit || 5;
+    if(city){
+      const response = await getApartmentByLocation(city)
+            res.status(201).json(response)
+    } else {
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 5;
 
-    const response = await getApartmentsController( page,limit );
-    res.status(200).json( response );
+      const response = await getApartmentsController( page,limit );
+      res.status(200).json( response );
+    }
+    
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -37,24 +44,8 @@ const postApartmentHandler = async (req, res) => {
   }
 };
 
-const getApartmentHandler = async ( req,res ) => {
-    const { city } = req.query
-    try {
-        if(city) {
-            const response = await getApartamentByLocation(city)
-            res.status(201).json(response)
-        } else {
-            const response = await getApartamentController();
-            res.status( 201 ).json( response ); 
-        }
-    } catch (error) {
-        res.status( 400 ).json( { error: error.message } )
-    }
-}
-
 module.exports = {
   getApartmentsHandler,
-  getApartmentHandler,
   postApartmentHandler,
   getApartmentbyIdHandler,
 };

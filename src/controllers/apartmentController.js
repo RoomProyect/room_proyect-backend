@@ -29,9 +29,12 @@ const getApartmentByIdController = async (id) => {
   return apartment;
 };
 
-const getApartamentByLocation = async (city) => {
-    const allApartaments = await getApartamentController()
-    const apartamentsByCity = allApartaments.filter((apartament) => apartament.city.toLowerCase().includes(city.toLowerCase()))
+const getApartmentByLocation = async (city) => {
+    const allApartaments = await getApartmentsController()
+    
+    
+    
+    const apartamentsByCity = allApartaments.docs.filter((apartament) => apartament.ciudad.toLowerCase().includes(city.toLowerCase()))
     // if(!apartamentsByCity.length) return {message: `Sin datos con el nombre: ${city}`}
     return apartamentsByCity
 
@@ -40,6 +43,6 @@ const getApartamentByLocation = async (city) => {
 module.exports = {
   getApartmentsController,
   postApartmentController,
-  getApartamentByLocation,
+  getApartmentByLocation,
   getApartmentByIdController,
 };
