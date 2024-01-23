@@ -27,8 +27,8 @@ const postUserHandler = async ( req,res ) => {
 
 const loginUserHandler = async ( req,res ) =>{
     try {
-        const { email } = req.body;
-        const response = await loginUserController(email);
+        const { email, password } = req.body;
+        const response = await loginUserController(email, password);
 
         if(response.error){
             throw new Error(response.error)
@@ -36,7 +36,7 @@ const loginUserHandler = async ( req,res ) =>{
 
         res.status( 201 ).json(response)
     } catch (error) {
-        res.status( 400 ).json( {error: error.message } )
+        res.status( 400 ).json( {error: error.message, login: false} )
     }
 }
 
