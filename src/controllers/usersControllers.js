@@ -27,7 +27,7 @@ const getUsersController = async() => {
 
 const loginUserController = async (email, password) =>{
     const existingUser = await userExists(email)
-    if (!existingUser) {
+    if (!(!!existingUser)) {
         return { error: 'Este usuario no existe'}
     }
     const user = await userSchema.findOne( {email: email} ).exec();
@@ -38,7 +38,7 @@ const loginUserController = async (email, password) =>{
         return { error: 'Contraseña incorrecta'}
     }
 
-    return { message: 'inicio de sesion exitoso', login: true }
+    return existingUser
 }
 
 module.exports = {

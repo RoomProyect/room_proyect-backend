@@ -5,7 +5,7 @@ const saltRounds = 10
 
 const userExists = async (email) => {
     const existingUser = await userSchema.findOne({ email });
-    return !!existingUser;
+    return existingUser;
 };
 
 const hashPassword = async (password) => {
