@@ -9,9 +9,11 @@ const postUserController = async( data ) => {
         return { error: 'El usuario ya existe' }
     }
 
-    const hashedPassword = await hashPassword(data.password);
-
-    data.password = hashedPassword;
+    if(data.password){
+        const hashedPassword = await hashPassword(data.password);
+    
+        data.password = hashedPassword;
+    }
 
     const user = userSchema( data );
     const response = await user.save();
