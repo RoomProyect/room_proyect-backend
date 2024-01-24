@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
     },
     averageRating: {
         type: Number
+    },
+    active: {
+        type: Boolean,
+        default: true
     }
 });
 
