@@ -13,7 +13,7 @@ const getApartmentsHandler = async (req, res) => {
             res.status(201).json(response)
     } else {
       const page = req.query.page || 1;
-      const limit = req.query.limit || 5;
+      const limit = req.query.limit || 8;
 
       const response = await getApartmentsController( page,limit );
       res.status(200).json( response );

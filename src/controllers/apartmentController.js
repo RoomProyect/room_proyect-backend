@@ -7,7 +7,7 @@ const postApartmentController = async (data) => {
   return response;
 };
 
-const getApartmentsController = async ( page = 1,limit = 5 ) => {
+const getApartmentsController = async ( page = 1,limit = 8 ) => {
   try {
     const options = {
       page,
