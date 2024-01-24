@@ -3,6 +3,7 @@ const {
   getApartmentsController,
   getApartmentByLocation,
   getApartmentByIdController,
+  putApartmentController
 } = require("../controllers/apartmentController");
 
 const getApartmentsHandler = async (req, res) => {
@@ -44,8 +45,18 @@ const postApartmentHandler = async (req, res) => {
   }
 };
 
+const putApartmentHandler = async (req, res) => {
+  try {
+    const response = await putApartmentController(req.body);
+    res.status(201).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
+}
+
 module.exports = {
   getApartmentsHandler,
   postApartmentHandler,
   getApartmentbyIdHandler,
+  putApartmentHandler
 };

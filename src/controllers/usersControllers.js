@@ -9,9 +9,11 @@ const postUserController = async( data ) => {
         return { error: 'El usuario ya existe' }
     }
 
-    const hashedPassword = await hashPassword(data.password);
-
-    data.password = hashedPassword;
+    if(data.password){
+        const hashedPassword = await hashPassword(data.password);
+    
+        data.password = hashedPassword;
+    }
 
     const user = userSchema( data );
     const response = await user.save();
@@ -41,8 +43,15 @@ const loginUserController = async (email, password) =>{
     return existingUser
 }
 
+const putUserController = async ( data ) =>{
+    const responseUser = await userSchema.findByIdAndUpdate(data._id, data, { returnDocument: 'after' })
+
+    return responseUser
+}
+
 module.exports = {
     postUserController,
     getUsersController,
-    loginUserController
+    loginUserController,
+    putUserController
 }

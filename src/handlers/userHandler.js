@@ -1,4 +1,4 @@
-const { postUserController, getUsersController, loginUserController } = require("../controllers/usersControllers");
+const { postUserController, getUsersController, loginUserController, putUserController } = require("../controllers/usersControllers");
 const { verification_email_message } = require("../functions/email-verification");
 
 const getUsersHandler = async( req,res ) => {
@@ -40,8 +40,19 @@ const loginUserHandler = async ( req,res ) =>{
     }
 }
 
+const putUserHandler = async ( req, res ) =>{
+    try {
+        const response = await putUserController(req.body);
+
+        res.status( 201 ).json(response)
+    } catch (error) {
+        res.status( 400 ).json( { error: error.message } )
+    }
+}
+
 module.exports = {
     getUsersHandler,
     postUserHandler,
-    loginUserHandler
+    loginUserHandler,
+    putUserHandler
 }
