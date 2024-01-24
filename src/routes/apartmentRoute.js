@@ -3,6 +3,7 @@ const {
   postApartmentHandler,
   getApartmentsHandler,
   getApartmentbyIdHandler,
+  putApartmentHandler
 } = require("../handlers/apartmentHandler");
 
 const apartmentRouter = Router();
@@ -10,6 +11,8 @@ const apartmentRouter = Router();
 apartmentRouter.post("/", postApartmentHandler);
 
 apartmentRouter.get("/", getApartmentsHandler);
+
+apartmentRouter.put('/', putApartmentHandler);
 
 apartmentRouter.get("/:id", getApartmentbyIdHandler);
 
