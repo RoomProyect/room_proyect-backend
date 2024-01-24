@@ -43,8 +43,15 @@ const loginUserController = async (email, password) =>{
     return existingUser
 }
 
+const putUserController = async ( data ) =>{
+    const responseUser = await userSchema.findByIdAndUpdate(data._id, data, { returnDocument: 'after' })
+
+    return responseUser
+}
+
 module.exports = {
     postUserController,
     getUsersController,
-    loginUserController
+    loginUserController,
+    putUserController
 }
