@@ -2,11 +2,11 @@ const { Router } = require("express");
 
 const stripeRouter = Router();
 
-require("dotenv").config()
+require("dotenv").config();
 
-const Stripe = require("stripe")
+const Stripe = require("stripe");
 
-const stripe = Stripe(process.env.STRIPE_KEY)
+const stripe = Stripe(process.env.STRIPE_KEY);
 
 stripeRouter.post("/", async (req, res) => {
 
@@ -31,10 +31,11 @@ stripeRouter.post("/", async (req, res) => {
     }]
 
     const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
         line_items,
         mode: 'payment',
-        success_url: 'https://room-project-backend.onrender.com/checkout-success',
-        cancel_url: `https://room-project-backend.onrender.com/detail/${_id}`,
+        success_url: 'http://localhost:5173/checkout-success',
+        cancel_url: `http://localhost:5173/detail/${_id}`,
     });
     
     res.send({url: session.url});
