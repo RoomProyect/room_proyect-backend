@@ -35,6 +35,10 @@ const apartmentSchema = mongoose.Schema({
     },
     habitaciones: {
         type: String
+    },
+    active: {
+        type: Boolean,
+        default: true
     }
 });
 

@@ -7,7 +7,7 @@ const postApartmentController = async (data) => {
   return response;
 };
 
-const getApartmentsController = async ( page = 1,limit = 5 ) => {
+const getApartmentsController = async ( page = 1,limit = 8 ) => {
   try {
     const options = {
       page,
@@ -40,9 +40,16 @@ const getApartmentByLocation = async (city) => {
 
 }
 
+const putApartmentController = async ( data ) => {
+    const newApartment = await apartmentSchema.findByIdAndUpdate(data._id, data, { returnDocument: 'after' })
+
+    return newApartment
+}
+
 module.exports = {
   getApartmentsController,
   postApartmentController,
   getApartmentByLocation,
   getApartmentByIdController,
+  putApartmentController
 };
