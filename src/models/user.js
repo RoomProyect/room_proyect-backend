@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
     },
     rol: {
         type: String,
+        default: 'user',
         required: true,
     },
     averageRating: {
@@ -23,6 +24,10 @@ const userSchema = mongoose.Schema({
     active: {
         type: Boolean,
         default: true
+    },
+    review: {
+        type: Boolean,
+        default: false
     }
 });
 
