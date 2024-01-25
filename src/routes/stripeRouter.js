@@ -33,8 +33,8 @@ stripeRouter.post("/", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         line_items,
         mode: 'payment',
-        success_url: 'http://localhost:5173/checkout-success',
-        cancel_url: `http://localhost:5173/detail/${_id}`,
+        success_url: 'https://room-project-backend.onrender.com/checkout-success',
+        cancel_url: `https://room-project-backend.onrender.com/detail/${_id}`,
     });
     
     res.send({url: session.url});
