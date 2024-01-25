@@ -20,14 +20,14 @@ const getUsersController = async() => {
     return users;
 }
 
-const loginUserController = async (email, password) =>{
+const loginUserController = async (email) =>{
     const existingUser = await userExists(email)
     if (!(!!existingUser)) {
         return { error: 'Este usuario no existe'}
     }
     const user = await userSchema.findOne( {email: email} ).exec();
 
-    return { message: 'inicio de sesion exitoso'}
+    return user
 }
 
 const putUserController = async ( data ) =>{
