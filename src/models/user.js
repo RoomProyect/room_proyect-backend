@@ -10,15 +10,12 @@ const userSchema = mongoose.Schema({
         required: true,
         unique: true,
     },
-    password: {
-        type: String,
-        required: true
-    },
     age: {
         type: Number,
     },
     rol: {
         type: String,
+        default: 'user',
         required: true,
     },
     averageRating: {
@@ -27,6 +24,10 @@ const userSchema = mongoose.Schema({
     active: {
         type: Boolean,
         default: true
+    },
+    review: {
+        type: Boolean,
+        default: false
     }
 });
 

@@ -2,11 +2,11 @@ const { Router } = require("express");
 
 const stripeRouter = Router();
 
-require("dotenv").config()
+require("dotenv").config();
 
-const Stripe = require("stripe")
+const Stripe = require("stripe");
 
-const stripe = Stripe(process.env.STRIPE_KEY)
+const stripe = Stripe(process.env.STRIPE_KEY);
 
 stripeRouter.post("/", async (req, res) => {
 
@@ -31,6 +31,7 @@ stripeRouter.post("/", async (req, res) => {
     }]
 
     const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
         line_items,
         mode: 'payment',
         success_url: 'http://localhost:5173/checkout-success',
