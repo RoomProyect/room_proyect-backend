@@ -30,8 +30,15 @@ const loginUserController = async (email, password) =>{
     return { message: 'inicio de sesion exitoso'}
 }
 
+const putUserController = async ( data ) =>{
+    const newUser = await userSchema.findByIdAndUpdate(data._id, data, { returnDocument: 'after' })
+
+    return newUser
+}
+
 module.exports = {
     postUserController,
     getUsersController,
     loginUserController,
+    putUserController
 }
