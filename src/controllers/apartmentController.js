@@ -7,7 +7,7 @@ const postApartmentController = async (data) => {
   return response;
 };
 
-const getApartmentsController = async ( page = 1,limit = 5 ) => {
+const getApartmentsController = async ( page = 1,limit = 8 ) => {
   try {
     const options = {
       page,
@@ -29,25 +29,27 @@ const getApartmentByIdController = async (id) => {
   return apartment;
 };
 
-const getApartamentByLocation = async (country, city) => {
-  const allApartaments = await getApartamentController();
-  const apartamentsByCountry = allApartaments.filter((apartament) =>
-    apartament.country.toLowerCase().includes(country.toLowerCase())
-  );
+const getApartmentByLocation = async (city) => {
+    const allApartaments = await getApartmentsController()
+    
+    
+    
+    const apartamentsByCity = allApartaments.docs.filter((apartament) => apartament.ciudad.toLowerCase().includes(city.toLowerCase()))
+    // if(!apartamentsByCity.length) return {message: `Sin datos con el nombre: ${city}`}
+    return apartamentsByCity
 
-  // if(!apartamentsByCountry.length) return `Sin datos con el nombre: ${country}`
+}
 
-  // if(apartamentsByCountry && city) {
-  //     const response = apartamentsByCountry.filter((apartament) => apartament.city.toLowerCase().includes(city.toLowerCase()))
-  //     return response
-  // } else return apartamentsByCountry
-  return apartamentsByCountry;
-  // if(!apartamentsByCountry.length) return `Sin datos con el nombre: ${country}`
-};
+const putApartmentController = async ( data ) => {
+    const newApartment = await apartmentSchema.findByIdAndUpdate(data._id, data, { returnDocument: 'after' })
+
+    return newApartment
+}
 
 module.exports = {
   getApartmentsController,
   postApartmentController,
-  getApartamentByLocation,
+  getApartmentByLocation,
   getApartmentByIdController,
+  putApartmentController
 };

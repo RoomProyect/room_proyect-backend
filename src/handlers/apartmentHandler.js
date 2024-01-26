@@ -1,17 +1,25 @@
 const {
   postApartmentController,
   getApartmentsController,
-  getApartamentByLocation,
+  getApartmentByLocation,
   getApartmentByIdController,
+  putApartmentController
 } = require("../controllers/apartmentController");
 
 const getApartmentsHandler = async (req, res) => {
+  const { city } = req.query
   try {
-    const page = req.query.page || 1;
-    const limit = req.query.limit || 5;
+    if(city){
+      const response = await getApartmentByLocation(city)
+            res.status(201).json(response)
+    } else {
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 8;
 
-    const response = await getApartmentsController( page,limit );
-    res.status(200).json( response );
+      const response = await getApartmentsController( page,limit );
+      res.status(200).json( response );
+    }
+    
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -37,24 +45,18 @@ const postApartmentHandler = async (req, res) => {
   }
 };
 
-const getApartmentHandler = async (req, res) => {
-  const { country } = req.query;
+const putApartmentHandler = async (req, res) => {
   try {
-    if (country) {
-      const response = await getApartamentByLocation(country);
-      res.status(201).json(response);
-    } else {
-      const response = await getApartmentsController();
-      res.status(201).json(response);
-    }
+    const response = await putApartmentController(req.body);
+    res.status(201).json(response);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message })
   }
-};
+}
 
 module.exports = {
   getApartmentsHandler,
-  getApartmentHandler,
   postApartmentHandler,
   getApartmentbyIdHandler,
+  putApartmentHandler
 };
