@@ -19,7 +19,7 @@ const apartmentSchema = mongoose.Schema({
         type: String
     },
     img: {
-        type: String
+        type: Array
     },
     mcTerreno: {
         type: String
