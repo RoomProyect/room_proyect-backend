@@ -1,71 +1,43 @@
 const mongoose = require( 'mongoose' );
+const mongoosePaginate = require( 'mongoose-paginate-v2' );
 
 const apartmentSchema = mongoose.Schema({
-    title: {
+
+    ambientes: {
         type: String
     },
-    city:{
+    baños:{
         type: String
     },
-    country: {
+    ciudad: {
         type: String
     },
-    description: {
+    cochera: {
         type: String
     },
-    qualification: {
-        type: Number,
-        validate: {
-            validator: function(value) {
-              return value >= 0.00 && value <= 5.00;
-            },
-            message: 'La calificación debe estar entre 0.00 y 5.00'
-        }
+    descripcion: {
+        type: String
     },
-    rooms:{
-        type: Number
+    img: {
+        type: String
     },
-    beds:{
-        type: Number
+    mcTerreno: {
+        type: String
     },
-    bathrooms: {
-        type: Number
+    precio: {
+        type: String
+    },    
+    titulo: {
+        type: String
     },
-    guests: {
-        type: Number
+    tipoDeVivienda: {
+        type: String
     },
-    //boolean data
-    wifi:{
-        type: Boolean
-    },
-    parking: {
-        type: Boolean
-    },
-    washing_machine:{
-        type: Boolean
-    },
-    carbon_monoxide_detector:{
-        type: Boolean
-    },
-    kitchen: {
-        type: Boolean
-    },
-    work_zone: {
-        type: Boolean
-    },
-    television: {
-        type: Boolean,
-    },
-    air_conditioning: {
-        type: Boolean
-    },
-    smoke_detector:{
-        type: Boolean
-    },
-    user: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User',
-        required: true
+    habitaciones: {
+        type: String
     }
 });
 
-module.exports = mongoose.model( 'Apartment', apartmentSchema );
+apartmentSchema.plugin( mongoosePaginate );
+
+module.exports = mongoose.model( 'vivienda', apartmentSchema);

@@ -1,4 +1,5 @@
 const { postUserController, getUsersController } = require("../controllers/usersControllers");
+const { verification_email_message } = require("../functions/email-verification");
 
 const getUsersHandler = async( req,res ) => {
     try {
@@ -12,7 +13,10 @@ const getUsersHandler = async( req,res ) => {
 const postUserHandler = async ( req,res ) => {
     try {
         const response = await postUserController( req.body );
-        res.status( 201 ).json( response ); 
+
+        await verification_email_message(req.body.email, req.body.name)
+
+        res.status( 201 ).json( response );
     } catch (error) {
         res.status( 400 ).json( { error: error.message } )
     }
