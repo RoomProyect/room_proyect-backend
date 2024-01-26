@@ -7,18 +7,28 @@ const {
 } = require("../controllers/apartmentController");
 
 const getApartmentsHandler = async (req, res) => {
-  const { city } = req.query
+  const { ambientes, baños, cochera, mcTerreno, precio, habitaciones } = req.query
   try {
-    if(city){
-      const response = await getApartmentByLocation(city)
-            res.status(201).json(response)
-    } else {
-      const page = req.query.page || 1;
-      const limit = req.query.limit || 8;
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+    const sortBy = req.query.sortBy || 'titulo';
+    const sortOrder = req.query.sortOrder || 1;
 
-      const response = await getApartmentsController( page,limit );
-      res.status(200).json( response );
+    const filters = {
+      ambientes,
+      baños,
+      cochera,
+      mcTerreno,
+      precio,
+      habitaciones
     }
+
+    const appliedFilters = Object.fromEntries(
+      Object.entries(filters).filter(([key, value]) => value !== undefined)
+    )
+
+    const response = await getApartmentsController(page, limit, sortBy, sortOrder, appliedFilters);
+    res.status(200).json(response);
     
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -60,3 +70,23 @@ module.exports = {
   getApartmentbyIdHandler,
   putApartmentHandler
 };
+
+
+
+
+// const getApartmentsController = async ( page, limit ) => {
+//   try {
+//     const options = {
+//       page,
+//       limit,
+//       sort: { baños: 1, titulo: 1 }
+//     }
+//     console.log('Opciones de ordenación:', options.sort)
+//     const dbApartments = await apartmentSchema.paginate( {},options );
+//     console.log('Documentos después de la paginación:', dbApartments.docs)
+//     return dbApartments;
+
+//   } catch (error) {
+//     throw( error );
+//   }
+// };

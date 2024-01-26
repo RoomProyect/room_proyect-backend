@@ -7,15 +7,25 @@ const postApartmentController = async (data) => {
   return response;
 };
 
-const getApartmentsController = async ( page = 1,limit = 8 ) => {
+const getApartmentsController = async ( page, limit, sortBy, sortOrder, appliedFilters ) => {
   try {
     const options = {
       page,
-      limit
+      limit,
+      sort: { [sortBy]: sortOrder }
     }
     
-    const dbApartments = await apartmentSchema.paginate( {},options );
+    const queryFilters = {};
 
+    if (appliedFilters.ambientes) queryFilters.ambientes = appliedFilters.ambientes;
+    if (appliedFilters.baños) queryFilters.baños = appliedFilters.baños;
+    if (appliedFilters.cochera) queryFilters.cochera = appliedFilters.cochera;
+    if (appliedFilters.mcTerreno) queryFilters.mcTerreno = appliedFilters.mcTerreno;
+    if (appliedFilters.precio) queryFilters.precio = appliedFilters.precio;
+    if (appliedFilters.habitaciones) queryFilters.habitaciones = appliedFilters.habitaciones;
+
+    const dbApartments = await apartmentSchema.paginate(queryFilters, options)
+    
     return dbApartments;
 
   } catch (error) {
@@ -53,3 +63,34 @@ module.exports = {
   getApartmentByIdController,
   putApartmentController
 };
+
+
+
+// const getApartmentsHandler = async (req, res) => {
+//   const { ambientes, baños, cochera, mcTerreno, precio, habitaciones } = req.query
+//   try {
+//     const page = req.query.page || 1;
+//     const limit = req.query.limit || 10;
+//     const sortBy = req.query.sortBy || 'titulo';
+//     const sortOrder = req.query.sortOrder || 1;
+
+//     const filters = {
+//       ambientes,
+//       baños,
+//       cochera,
+//       mcTerreno,
+//       precio,
+//       habitaciones
+//     }
+
+//     const appliedFilters = Object.fromEntries(
+//       Object.entries(filters).filter(([key, value]) => value !== undefined)
+//     )
+
+//     const response = await getApartmentsController(page, limit, sortBy, sortOrder, appliedFilters);
+//     res.status(200).json(response);
+    
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// };
