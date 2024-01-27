@@ -7,12 +7,27 @@ const {
 } = require("../controllers/apartmentController");
 
 const getApartmentsHandler = async (req, res) => {
-  const { ambientes, baños, cochera, mcTerreno, precio, habitaciones } = req.query
+  const { ambientes, baños, cochera, mcTerreno, precio, habitaciones, ciudad } = req.query
+
   try {
     const page = req.query.page || 1;
     const limit = req.query.limit || 10;
-    const sortBy = req.query.sortBy || 'titulo';
-    const sortOrder = req.query.sortOrder || 1;
+    const sortByT = req.query.sortByT || undefined;
+    const sortByP = req.query.sortByP || undefined;
+    
+    const sorting = {
+      precio: sortByP !== undefined ? parseInt(sortByP) : undefined,
+      titulo: sortByT !== undefined ? parseInt(sortByT) : undefined
+    }
+    
+    const appliedOrders = Object.fromEntries(
+      Object.entries(sorting).filter(([key, value]) => value !== undefined)
+      )
+      console.log("appliedOrders:", appliedOrders);
+      
+    // const sortOptions = Object.keys(appliedOrders).length === 0 ? {} : { sort: appliedOrders };
+    // console.log("sortOptions:", sortOptions);
+
 
     const filters = {
       ambientes,
@@ -20,14 +35,15 @@ const getApartmentsHandler = async (req, res) => {
       cochera,
       mcTerreno,
       precio,
-      habitaciones
+      habitaciones,
+      ciudad
     }
 
     const appliedFilters = Object.fromEntries(
       Object.entries(filters).filter(([key, value]) => value !== undefined)
     )
 
-    const response = await getApartmentsController(page, limit, sortBy, sortOrder, appliedFilters);
+    const response = await getApartmentsController(page, limit, appliedOrders, appliedFilters);
     res.status(200).json(response);
     
   } catch (error) {

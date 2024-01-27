@@ -7,12 +7,12 @@ const postApartmentController = async (data) => {
   return response;
 };
 
-const getApartmentsController = async ( page, limit, sortBy, sortOrder, appliedFilters ) => {
+const getApartmentsController = async ( page, limit, appliedOrders, appliedFilters ) => {
   try {
     const options = {
       page,
       limit,
-      sort: { [sortBy]: sortOrder }
+      sort: appliedOrders
     }
     
     const queryFilters = {};
@@ -23,6 +23,9 @@ const getApartmentsController = async ( page, limit, sortBy, sortOrder, appliedF
     if (appliedFilters.mcTerreno) queryFilters.mcTerreno = appliedFilters.mcTerreno;
     if (appliedFilters.precio) queryFilters.precio = appliedFilters.precio;
     if (appliedFilters.habitaciones) queryFilters.habitaciones = appliedFilters.habitaciones;
+    if (appliedFilters.ciudad) {
+      queryFilters.ciudad = { $regex: new RegExp(appliedFilters.ciudad, 'i') };
+    }
 
     const dbApartments = await apartmentSchema.paginate(queryFilters, options)
     
