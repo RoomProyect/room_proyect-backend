@@ -9,6 +9,9 @@ const apartmentSchema = mongoose.Schema({
     baños:{
         type: String
     },
+    userId: {
+        type: String
+    },
     ciudad: {
         type: String
     },
