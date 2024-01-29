@@ -11,7 +11,9 @@ const postComentHandler = async ( req,res ) => {
 
 const getComentsUserHandler = async ( req, res )=>{
     try {
-        const response = await getComentsUserController();
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 2;
+        const response = await getComentsUserController( page,limit );
 
         res.status( 201 ).json( response )
     } catch (error) {

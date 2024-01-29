@@ -25,10 +25,17 @@ const postComentController = async( data ) => {
     return saveComment;
 }
 
-const getComentsUserController = async() =>{
-    const coments = await comentsSchema.find()
+const getComentsUserController = async( page=1,limit=2 ) =>{
 
-    return coments
+    const options = {
+        page,
+        limit
+    }
+
+    const response = await comentsSchema.paginate({}, options);
+    // const coments = await comentsSchema.find();
+
+    return response
 }
 
 module.exports = {
