@@ -19,7 +19,7 @@ const getUsersController = async( page = 1,limit = 8, allUsers) => {
         if (allUsers) {
 
             const allUsersData = await userSchema.find();
-            return { data: allUsersData, message: 'All users retrieved successfully.' }
+            return allUsersData
         }
         const options = {
             page,
