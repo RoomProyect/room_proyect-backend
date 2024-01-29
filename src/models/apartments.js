@@ -48,3 +48,5 @@ const apartmentSchema = mongoose.Schema({
 apartmentSchema.plugin( mongoosePaginate );
 
 module.exports = mongoose.model( 'vivienda', apartmentSchema);
+
+// &precio[min]=100&precio[max]=400
