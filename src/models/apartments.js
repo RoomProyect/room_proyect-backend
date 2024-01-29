@@ -13,7 +13,7 @@ const apartmentSchema = mongoose.Schema({
         type: String
     },
     provincias: {
-        type: String
+        type: Object
     },
     cochera: {
         type: String
