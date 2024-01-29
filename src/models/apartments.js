@@ -9,6 +9,9 @@ const apartmentSchema = mongoose.Schema({
     baños:{
         type: String
     },
+    userId: {
+        type: String
+    },
     ciudad: {
         type: String
     },
@@ -19,7 +22,7 @@ const apartmentSchema = mongoose.Schema({
         type: String
     },
     img: {
-        type: String
+        type: Array
     },
     mcTerreno: {
         type: String
