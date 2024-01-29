@@ -12,8 +12,8 @@ const apartmentSchema = mongoose.Schema({
     userId: {
         type: String
     },
-    ciudad: {
-        type: String
+    provincias: {
+        type: Object
     },
     cochera: {
         type: String
@@ -42,6 +42,12 @@ const apartmentSchema = mongoose.Schema({
     active: {
         type: Boolean,
         default: true
+    },
+    latitud: {
+        type: String,
+    },
+    longitud: {
+        type: String
     }
 });
 

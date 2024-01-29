@@ -1,4 +1,4 @@
-const { postComentController, getComentsUserController } = require("../controllers/comentsControllers");
+const { postComentController,getComentsUserController } = require("../controllers/comentsControllers");
 
 const postComentHandler = async ( req,res ) => {
     try {
@@ -11,7 +11,9 @@ const postComentHandler = async ( req,res ) => {
 
 const getComentsUserHandler = async ( req, res )=>{
     try {
-        const response = await getComentsUserController( req.params.id );
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 2;
+        const response = await getComentsUserController( page,limit );
 
         res.status( 201 ).json( response )
     } catch (error) {
