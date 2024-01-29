@@ -20,7 +20,7 @@ const getUsersController = async( page = 1,limit = 8) => {
             page,
             limit
         }
-        const users = await userSchema.paginate({}, option);
+        const users = await userSchema.paginate({}, options);
         return users;
 
     }catch (error) {
