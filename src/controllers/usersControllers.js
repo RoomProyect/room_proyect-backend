@@ -14,8 +14,13 @@ const postUserController = async( data ) => {
     return response;
 }
 
-const getUsersController = async( page = 1,limit = 8) => {
+const getUsersController = async( page = 1,limit = 8, allUsers) => {
     try {
+        if (allUsers) {
+
+            const allUsersData = await getAllUsers();
+            return { data: allUsersData, message: 'All users retrieved successfully.' }
+        }
         const options = {
             page,
             limit
