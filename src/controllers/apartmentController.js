@@ -20,14 +20,45 @@ const getApartmentsController = async ( page, limit, appliedOrders, appliedFilte
     if (appliedFilters.ambientes) queryFilters.ambientes = appliedFilters.ambientes;
     if (appliedFilters.baños) queryFilters.baños = appliedFilters.baños;
     if (appliedFilters.cochera) queryFilters.cochera = appliedFilters.cochera;
-    if (appliedFilters.mcTerreno) queryFilters.mcTerreno = appliedFilters.mcTerreno;
-    if (appliedFilters.precio) queryFilters.precio = appliedFilters.precio;
+    // if (appliedFilters.mcTerreno) queryFilters.mcTerreno = appliedFilters.mcTerreno;
+    // Filtrar por rango de mcTerreno
+    if (appliedFilters.mcTerreno && (appliedFilters.mcTerreno.min !== undefined || appliedFilters.mcTerreno.max !== undefined)) {
+      queryFilters.mcTerreno = {};
+    
+      if (appliedFilters.mcTerreno.min !== undefined) {
+        queryFilters.mcTerreno.$gte = appliedFilters.mcTerreno.min;
+      }
+    
+      if (appliedFilters.mcTerreno.max !== undefined) {
+        queryFilters.mcTerreno.$lte = appliedFilters.mcTerreno.max;
+      }
+    }
+    // 
+
+    
+    // Filtrar por rango de precio
+    if (appliedFilters.precio && (appliedFilters.precio.min !== undefined || appliedFilters.precio.max !== undefined)) {
+      queryFilters.precio = {};
+    
+      if (appliedFilters.precio.min !== undefined) {
+        queryFilters.precio.$gte = appliedFilters.precio.min;
+      }
+    
+      if (appliedFilters.precio.max !== undefined) {
+        queryFilters.precio.$lte = appliedFilters.precio.max;
+      }
+    }
+    // 
+
     if (appliedFilters.habitaciones) queryFilters.habitaciones = appliedFilters.habitaciones;
     if (appliedFilters.ciudad) {
       queryFilters.ciudad = { $regex: new RegExp(appliedFilters.ciudad, 'i') };
     }
 
+    console.log("appliedFilters:", appliedFilters);
+    console.log("Consulta a MongoDB:", JSON.stringify(queryFilters));
     const dbApartments = await apartmentSchema.paginate(queryFilters, options)
+    console.log("Respuesta de la base de datos:", JSON.stringify(dbApartments));
     
     return dbApartments;
 
