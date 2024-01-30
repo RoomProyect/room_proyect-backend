@@ -7,7 +7,7 @@ const {
 } = require("../controllers/apartmentController");
 
 const getApartmentsHandler = async (req, res) => {
-  const { ambientes, baños, cochera, habitaciones, ciudad } = req.query
+  const { ambientes, baños, cochera, habitaciones, provincias } = req.query
 
   try {
     const page = req.query.page || 1;
@@ -46,7 +46,7 @@ const getApartmentsHandler = async (req, res) => {
         cochera,
         mcTerreno,
         habitaciones,
-        ciudad,
+        provincias,
         precio
       };
 

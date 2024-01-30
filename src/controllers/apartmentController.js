@@ -51,8 +51,8 @@ const getApartmentsController = async ( page, limit, appliedOrders, appliedFilte
     // 
 
     if (appliedFilters.habitaciones) queryFilters.habitaciones = appliedFilters.habitaciones;
-    if (appliedFilters.ciudad) {
-      queryFilters.ciudad = { $regex: new RegExp(appliedFilters.ciudad, 'i') };
+    if (appliedFilters.provincias) {
+      queryFilters.provincias = { $regex: new RegExp(appliedFilters.provincias, 'i') };
     }
 
     console.log("appliedFilters:", appliedFilters);
