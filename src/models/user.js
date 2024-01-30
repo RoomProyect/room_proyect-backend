@@ -29,6 +29,9 @@ const userSchema = mongoose.Schema({
     review: {
         type: Boolean,
         default: false
+    },
+    apartments: {
+        type: Array
     }
 });
 
