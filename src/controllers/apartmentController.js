@@ -7,15 +7,59 @@ const postApartmentController = async (data) => {
   return response;
 };
 
-const getApartmentsController = async ( page = 1,limit = 8 ) => {
+const getApartmentsController = async ( page, limit, appliedOrders, appliedFilters ) => {
   try {
     const options = {
       page,
-      limit
+      limit,
+      sort: appliedOrders
     }
     
-    const dbApartments = await apartmentSchema.paginate( {},options );
+    const queryFilters = {};
 
+    if (appliedFilters.ambientes) queryFilters.ambientes = appliedFilters.ambientes;
+    if (appliedFilters.baños) queryFilters.baños = appliedFilters.baños;
+    if (appliedFilters.cochera) queryFilters.cochera = appliedFilters.cochera;
+    // if (appliedFilters.mcTerreno) queryFilters.mcTerreno = appliedFilters.mcTerreno;
+    // Filtrar por rango de mcTerreno
+    if (appliedFilters.mcTerreno && (appliedFilters.mcTerreno.min !== undefined || appliedFilters.mcTerreno.max !== undefined)) {
+      queryFilters.mcTerreno = {};
+    
+      if (appliedFilters.mcTerreno.min !== undefined) {
+        queryFilters.mcTerreno.$gte = appliedFilters.mcTerreno.min;
+      }
+    
+      if (appliedFilters.mcTerreno.max !== undefined) {
+        queryFilters.mcTerreno.$lte = appliedFilters.mcTerreno.max;
+      }
+    }
+    // 
+
+    
+    // Filtrar por rango de precio
+    if (appliedFilters.precio && (appliedFilters.precio.min !== undefined || appliedFilters.precio.max !== undefined)) {
+      queryFilters.precio = {};
+    
+      if (appliedFilters.precio.min !== undefined) {
+        queryFilters.precio.$gte = appliedFilters.precio.min;
+      }
+    
+      if (appliedFilters.precio.max !== undefined) {
+        queryFilters.precio.$lte = appliedFilters.precio.max;
+      }
+    }
+    // 
+
+    if (appliedFilters.habitaciones) queryFilters.habitaciones = appliedFilters.habitaciones;
+    if (appliedFilters.ciudad) {
+      queryFilters.ciudad = { $regex: new RegExp(appliedFilters.ciudad, 'i') };
+    }
+
+    console.log("appliedFilters:", appliedFilters);
+    console.log("Consulta a MongoDB:", JSON.stringify(queryFilters));
+    const dbApartments = await apartmentSchema.paginate(queryFilters, options)
+    console.log("Respuesta de la base de datos:", JSON.stringify(dbApartments));
+    
     return dbApartments;
 
   } catch (error) {
@@ -53,3 +97,34 @@ module.exports = {
   getApartmentByIdController,
   putApartmentController
 };
+
+
+
+// const getApartmentsHandler = async (req, res) => {
+//   const { ambientes, baños, cochera, mcTerreno, precio, habitaciones } = req.query
+//   try {
+//     const page = req.query.page || 1;
+//     const limit = req.query.limit || 10;
+//     const sortBy = req.query.sortBy || 'titulo';
+//     const sortOrder = req.query.sortOrder || 1;
+
+//     const filters = {
+//       ambientes,
+//       baños,
+//       cochera,
+//       mcTerreno,
+//       precio,
+//       habitaciones
+//     }
+
+//     const appliedFilters = Object.fromEntries(
+//       Object.entries(filters).filter(([key, value]) => value !== undefined)
+//     )
+
+//     const response = await getApartmentsController(page, limit, sortBy, sortOrder, appliedFilters);
+//     res.status(200).json(response);
+    
+//   } catch (error) {
+//     res.status(400).json({ error: error.message });
+//   }
+// };

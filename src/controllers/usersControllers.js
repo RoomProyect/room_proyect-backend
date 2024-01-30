@@ -14,10 +14,23 @@ const postUserController = async( data ) => {
     return response;
 }
 
-const getUsersController = async() => {
-    const users = await userSchema.find();
+const getUsersController = async( page = 1,limit = 8, allUsers) => {
+    try {
+        if (allUsers) {
 
-    return users;
+            const allUsersData = await userSchema.find();
+            return { docs: allUsersData, message: 'All users retrieved successfully.' }
+        }
+        const options = {
+            page,
+            limit
+        }
+        const users = await userSchema.paginate({}, options);
+        return users;
+
+    }catch (error) {
+        throw( error );
+    }
 }
 
 const loginUserController = async (email) =>{

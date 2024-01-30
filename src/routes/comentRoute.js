@@ -4,6 +4,6 @@ const { postComentHandler, getComentsUserHandler } = require('../handlers/coment
 const comentRouter = Router();
 
 comentRouter.post( '/', postComentHandler );
-comentRouter.get( '/:id', getComentsUserHandler );
+comentRouter.get( '/', getComentsUserHandler );
 
 module.exports = comentRouter;

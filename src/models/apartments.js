@@ -9,8 +9,11 @@ const apartmentSchema = mongoose.Schema({
     baños:{
         type: String
     },
-    ciudad: {
+    userId: {
         type: String
+    },
+    provincias: {
+        type: Object
     },
     cochera: {
         type: String
@@ -19,7 +22,7 @@ const apartmentSchema = mongoose.Schema({
         type: String
     },
     img: {
-        type: String
+        type: Array
     },
     mcTerreno: {
         type: String
@@ -39,9 +42,17 @@ const apartmentSchema = mongoose.Schema({
     active: {
         type: Boolean,
         default: true
+    },
+    latitud: {
+        type: String,
+    },
+    longitud: {
+        type: String
     }
 });
 
 apartmentSchema.plugin( mongoosePaginate );
 
 module.exports = mongoose.model( 'vivienda', apartmentSchema);
+
+// &precio[min]=100&precio[max]=400

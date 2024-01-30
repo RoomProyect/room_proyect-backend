@@ -3,7 +3,11 @@ const { verification_email_message } = require("../functions/email-verification"
 
 const getUsersHandler = async( req,res ) => {
     try {
-        const response = await getUsersController();
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 8;
+        const allUsers = req.query.allUsers || false;
+
+        const response = await getUsersController(page, limit, allUsers);
         res.status( 200 ).json( response );
     } catch (error) {
         res.status( 400 ).json( { error: error.message } );
