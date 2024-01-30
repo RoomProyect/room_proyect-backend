@@ -26,11 +26,12 @@ const getApartmentsController = async ( page, limit, appliedOrders, appliedFilte
       queryFilters.mcTerreno = {};
     
       if (appliedFilters.mcTerreno.min !== undefined) {
-        queryFilters.mcTerreno.$gte = appliedFilters.mcTerreno.min;
+        queryFilters.mcTerreno.$gte = parseInt(appliedFilters.precio.min)
       }
     
       if (appliedFilters.mcTerreno.max !== undefined) {
-        queryFilters.mcTerreno.$lte = appliedFilters.mcTerreno.max;
+        
+        queryFilters.mcTerreno.$lte = parseInt(appliedFilters.mcTerreno.max);
       }
     }
     // 
@@ -39,13 +40,15 @@ const getApartmentsController = async ( page, limit, appliedOrders, appliedFilte
     // Filtrar por rango de precio
     if (appliedFilters.precio && (appliedFilters.precio.min !== undefined || appliedFilters.precio.max !== undefined)) {
       queryFilters.precio = {};
-    
+  
       if (appliedFilters.precio.min !== undefined) {
         queryFilters.precio.$gte = appliedFilters.precio.min;
       }
     
       if (appliedFilters.precio.max !== undefined) {
+        
         queryFilters.precio.$lte = appliedFilters.precio.max;
+  
       }
     }
     // 

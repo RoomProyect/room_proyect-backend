@@ -28,7 +28,7 @@ const apartmentSchema = mongoose.Schema({
         type: String
     },
     precio: {
-        type: String
+        type: Number
     },    
     titulo: {
         type: String
@@ -47,6 +47,9 @@ const apartmentSchema = mongoose.Schema({
         type: String,
     },
     longitud: {
+        type: String
+    },
+    owner: {
         type: String
     }
 });
