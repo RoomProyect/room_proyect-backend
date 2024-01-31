@@ -19,7 +19,12 @@ const getApartmentsController = async ( page, limit, appliedOrders, appliedFilte
 
     if (appliedFilters.ambientes) queryFilters.ambientes = appliedFilters.ambientes;
     if (appliedFilters.baños) queryFilters.baños = appliedFilters.baños;
-    if (appliedFilters.cochera) queryFilters.cochera = appliedFilters.cochera;
+    // if (appliedFilters.cochera) queryFilters.cochera = appliedFilters.cochera;
+    if (appliedFilters.cochera !== undefined && appliedFilters.cochera === 'true' || appliedFilters.cochera ==='false') {
+      // Si appliedFilters.cochera es una cadena no vacía y es diferente de "false", filtra cochera mayor o igual a 1
+      // Si es false, filtra cochera igual a 0
+      queryFilters.cochera = appliedFilters.cochera && appliedFilters.cochera.toLowerCase() !== 'false' ? { $gte: 1 } : { $eq: 0 };
+    }
     // if (appliedFilters.mcTerreno) queryFilters.mcTerreno = appliedFilters.mcTerreno;
     // Filtrar por rango de mcTerreno
     if (appliedFilters.mcTerreno && (appliedFilters.mcTerreno.min !== undefined || appliedFilters.mcTerreno.max !== undefined)) {
@@ -35,7 +40,6 @@ const getApartmentsController = async ( page, limit, appliedOrders, appliedFilte
       }
     }
     // 
-
     
     // Filtrar por rango de precio
     if (appliedFilters.precio && (appliedFilters.precio.min !== undefined || appliedFilters.precio.max !== undefined)) {
