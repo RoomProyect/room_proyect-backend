@@ -34,7 +34,7 @@ stripeRouter.post("/", async (req, res) => {
         payment_method_types: ['card'],
         line_items,
         mode: 'payment',
-        success_url: 'https://room-project-frontend.onrender.com/checkout-success',
+        success_url: 'https://room-project-frontend.onrender.com/#/checkout-success',
         cancel_url: `https://room-project-frontend.onrender.com/#/detail/${_id}`,
     });
     
